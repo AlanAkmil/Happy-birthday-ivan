@@ -1,5 +1,5 @@
 /* ============================================================
-   data.js — semua konten gampang diubah di sini.
+   data.js — all content is easy to edit right here.
    ============================================================ */
 
 const SITE_DATA = {
@@ -7,86 +7,86 @@ const SITE_DATA = {
 
   orbitLabels: [
     "Ivan",
-    "Sahabat Gua",
+    "My Best Friend",
     "Best Friend",
-    "3 Tahun Bareng",
+    "3 Years Together",
     "Happy Birthday Ivan 🎉",
     "Happy Birthday Bro 🎂",
-    "Selamat Ulang Tahun Ivan 🎊",
+    "Happy Birthday Ivan 🎊",
     "HBD Ivan 🔥",
-    "Sahabat Terbaik",
-    "Rekan Receh",
+    "Best Friend Ever",
+    "Partner in Crime",
   ],
 
-  // Kode rahasia buat buka page 2 (lock screen).
+  // Secret code to unlock page 2 (lock screen).
   secretCode: "1908",
-  secretHint: "petunjuk: tanggal ulang tahun lo sendiri",
+  secretHint: "hint: your own birthday",
 
   birthdayTitle: "Happy Birthday, Ivan!",
-  birthdayDate: "Selamat Bertambah Usia, Bro",
+  birthdayDate: "Happy Birthday, Bro",
 
-  // Bunga digital — tiap bunga nampilin 1 potongan pesan pas diklik
+  // Digital bouquet — each flower reveals one piece of the message
   bouquet: [
-    "Selamat ulang tahun ya, Van 🥳",
-    "Makasih udah jadi sahabat yang asik diajak ngobrol dari TikTok sampe sekarang",
-    "Udah 3 tahun kita temenan, dan lo salah satu sahabat terbaik gua",
-    "Semoga makin sukses, makin gacor, dan makin banyak momen seru bareng",
-    "Apapun yang lo pengen tahun ini, semoga cepet kesampaian",
-    "Makasih udah selalu ada buat ngobrol & becanda bareng",
+    "Happy birthday, Van 🥳",
+    "Thanks for being such a fun friend to talk to, from TikTok all the way to now",
+    "We've been friends for 3 years, and you're one of the best friends I've got",
+    "Hope you keep crushing it and we keep having awesome moments together",
+    "Whatever you're hoping for this year, I hope it comes true fast",
+    "Thanks for always being around to chat and joke around with",
   ],
 
   letter: `HAPPY BIRTHDAY, IVAN!
 
-Selamat ulang tahun ya bro, maaf gua gak sempet bikinin kado fisik, jadi ini aja dulu semoga lo suka.
+Happy birthday, bro. Sorry I didn't have time to get you a real gift, so this is what you get for now — hope you like it.
 
-Gua bukan orang yang jago ngerangkai kata-kata, tapi yang jelas gua bersyukur banget bisa kenal dan temenan sama lo. Dari awal kenal di TikTok sampe sekarang udah 3 tahun kita sering ngobrol, dan lo udah gua anggap kayak sahabat/best friend sendiri walau kita kenalnya online.
+I'm not exactly great with words, but I'm genuinely grateful to have met you and stayed friends this long. From meeting on TikTok to now, it's been 3 years of talking regularly, and I already consider you a true best friend, even though we met online.
 
-Semoga di umur yang baru ini lo makin sukses, makin sehat, dan segala rencana lo tahun ini bisa kesampaian. Semoga juga kita bisa terus temenan dan makin sering ngobrol kayak biasa.
+I hope this new year of your life brings you more success, good health, and everything you're planning actually works out. I also hope we keep being friends and keep talking as much as we always have.
 
-Sekali lagi, happy birthday, Van. Semoga harimu menyenangkan!`,
+Once again, happy birthday, Van. Hope you have an awesome day!`,
 
-  // Our journey — perjalanan pertemanan
+  // Our journey — the friendship timeline
   timeline: [
-    { label: "Awal Mula", title: "Kenalan Pertama di TikTok", desc: "Gak nyangka awalnya cuma comment-commentan, eh malah jadi sahabat sampe sekarang." },
-    { label: "Obrolan Pertama", title: "Chat Pertama Kita", desc: "Dari basa-basi doang, jadi keterusan ngobrol sampe sekarang." },
-    { label: "3 Tahun Berjalan", title: "Masih Sering Ngobrol", desc: "Walau beda kota bahkan mungkin gak pernah ketemu langsung, tapi tetep deket." },
-    { label: "Sampai Sekarang", title: "Masih, dan Akan Terus", desc: "Semoga pertemanan kita awet terus, Van." },
+    { label: "The Beginning", title: "First Met on TikTok", desc: "Didn't expect a random comment to turn into a friendship that's lasted this long." },
+    { label: "First Chat", title: "Our First Conversation", desc: "Started as small talk, turned into never really stopping." },
+    { label: "3 Years In", title: "Still Talking All the Time", desc: "Different cities, maybe never even met in person, but still close." },
+    { label: "Still Going", title: "Now, and Onward", desc: "Hope our friendship keeps going strong, Van." },
   ],
 
-  closingMessage: "Makasih udah jadi sahabat yang seru diajak ngobrol selama ini, Van. Semoga persahabatan kita awet terus ya. Happy birthday!",
+  closingMessage: "Thanks for being such a great friend to talk to all this time, Van. Hope our friendship lasts. Happy birthday!",
 
-  // Kuis receh
+  // Fun little quiz
   quiz: [
     {
-      q: "Kita kenalan pertama kali lewat platform apa?",
+      q: "Where did we first meet?",
       options: ["Instagram", "TikTok", "Discord", "WhatsApp"],
       correct: 1,
     },
     {
-      q: "Udah berapa lama kita temenan?",
-      options: ["1 Tahun", "2 Tahun", "3 Tahun", "5 Tahun"],
+      q: "How long have we been friends?",
+      options: ["1 Year", "2 Years", "3 Years", "5 Years"],
       correct: 2,
     },
     {
-      q: "Kalo lagi bosen, biasanya kita ngapain?",
-      options: ["Ngobrol receh", "Main game bareng", "Debat gak jelas", "Semua bener"],
+      q: "What do we usually do when we're bored?",
+      options: ["Talk nonsense", "Play games together", "Argue about random stuff", "All of the above"],
       correct: 3,
     },
     {
-      q: "Menurut lo, gua ini temen macam apa?",
-      options: ["Rada absurd", "Bisa diandelin", "Suka becanda", "Semua bener juga"],
+      q: "What kind of friend do you think I am?",
+      options: ["A bit weird", "Reliable", "Loves joking around", "All of the above"],
       correct: 3,
     },
   ],
 
-  // TODO: ganti dengan link mp3 lagu pilihan lo (lagu favorit Ivan / lagu kalian sering dengerin)
+  // TODO: add an mp3 link here for Ivan's favorite song / a song you both like
   musicSrc: "",
-  musicTitle: "Lagu Spesial Buat Ivan",
+  musicTitle: "A Special Song for Ivan",
 
-  // Gak ada foto — dipajang kartu kenangan/kata-kata aja
+  // No real photos yet — showing memory/quote cards instead
   photos: SITE_MEMORIES,
 };
 
-// subset dipakai buat orbit di page 1 (biar gak kepenuhan/berat)
-// karena gak ada foto, orbit foto dikosongin — cuma label kata-kata yang orbit
+// subset used for the orbit on page 1 (so it doesn't feel too crowded)
+// no photos, so the photo orbit stays empty — only the word labels orbit
 SITE_DATA.orbitPhotos = [];
