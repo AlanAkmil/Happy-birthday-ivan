@@ -1,17 +1,17 @@
 /* ============================================================
-   photos.js — awalnya buat daftar foto, tapi karena belum ada
-   foto Ivan, dipakein kartu kenangan/kata-kata dulu di galeri
-   (section "Potret-potret Kecil" di page2.html).
-   Kalau nanti ada fotonya, tinggal ganti isi array ini jadi
-   path file gambar (misal "photo1.jpg") kayak di versi awal,
-   terus di main.js bagian GALLERY ganti lagi render-nya pake <img>.
+   photos.js — originally a photo list, but since there are no
+   real photos of Ivan yet, it's filled with memory/quote cards
+   for the gallery ("Little Snapshots" section in page2.html).
+   Once you have real photos, just swap this array for image
+   paths (e.g. "photo1.jpg") like the original template, and
+   change the GALLERY render in main.js back to <img>.
    ============================================================ */
 
 const SITE_MEMORIES = [
-  "3 tahun temenan, dari TikTok sampe sekarang 📱",
-  "Sahabat receh yang selalu asik diajak ngobrol",
-  "Yang selalu ada buat dengerin curhatan gak jelas",
-  "Partner debat receh paling militan",
-  "Selalu bisa diajak ngobrol jam berapa aja",
-  "Sahabat jarak jauh yang berasa deket",
+  "3 years of friendship, from TikTok to now 📱",
+  "The funniest friend to talk to",
+  "Always there to listen to random rants",
+  "The most stubborn debate partner ever",
+  "Always up for a chat, any hour",
+  "A long-distance friend who feels close",
 ];
