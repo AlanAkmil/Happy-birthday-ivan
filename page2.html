@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,8 +16,8 @@
   <div class="lock-overlay" id="lockOverlay">
     <div class="lock-card">
       <span class="lock-flower">✦</span>
-      <h2 class="lock-title">Buat Lo, Sahabat Gua</h2>
-      <p class="lock-sub" id="lockHint">masukkan kode rahasianya</p>
+      <h2 class="lock-title">For You, My Best Friend</h2>
+      <p class="lock-sub" id="lockHint">enter the secret code</p>
       <div class="lock-dots" id="lockDots"></div>
       <div class="lock-pad" id="lockPad"></div>
     </div>
@@ -25,24 +25,24 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <p class="hero-eyebrow">malam ini, langit menyalakan satu lentera lagi buat sahabat gua</p>
+    <p class="hero-eyebrow">tonight, the sky lights up one more lantern for my best friend</p>
     <h1 class="hero-title" id="heroTitle">Happy Birthday</h1>
     <p class="hero-date" id="heroDate"></p>
     <button class="scroll-cue" id="scrollCue">
-      <span>buka kadonya</span>
+      <span>open your gift</span>
       <span class="cue-arrow">↓</span>
     </button>
   </section>
 
   <!-- ============ GIFT ============ -->
   <section class="gift-section" id="giftSection">
-    <p class="section-label">01 — sebuah kado</p>
-    <h2 class="section-title">Ada sesuatu untukmu</h2>
-    <p class="section-sub">Tarik pita-nya pelan-pelan.</p>
+    <p class="section-label">01 — a gift</p>
+    <h2 class="section-title">There's something for you</h2>
+    <p class="section-sub">Pull the ribbon slowly.</p>
 
     <div class="gift-stage">
       <div class="gift-glow"></div>
-      <button class="gift-box" id="giftBox" aria-label="Buka kado">
+      <button class="gift-box" id="giftBox" aria-label="Open the gift">
         <div class="box-lid">
           <div class="bow">
             <span class="bow-loop left"></span>
@@ -56,22 +56,22 @@
         </div>
       </button>
     </div>
-    <p class="gift-hint" id="giftHint">ketuk kadonya</p>
+    <p class="gift-hint" id="giftHint">tap the gift</p>
   </section>
 
   <!-- ============ BOUQUET ============ -->
   <section class="bouquet-section reveal-on-gift" id="bouquetSection">
-    <p class="section-label">02 — buket digital</p>
-    <h2 class="section-title scroll-reveal">Petik satu bunga</h2>
-    <p class="section-sub">tiap kelopak nyimpen satu potong rasa</p>
+    <p class="section-label">02 — a digital bouquet</p>
+    <h2 class="section-title scroll-reveal">Pick a flower</h2>
+    <p class="section-sub">each petal holds a little piece of the message</p>
     <div class="bouquet-field scroll-reveal" id="bouquetField"></div>
-    <div class="bouquet-note" id="bouquetNote">tap salah satu bunga di atas ✿</div>
+    <div class="bouquet-note" id="bouquetNote">tap one of the flowers above ✿</div>
   </section>
 
   <!-- ============ LETTER ============ -->
   <section class="letter-section reveal-on-gift" id="letterSection">
-    <p class="section-label">03 — sepucuk surat</p>
-    <h2 class="section-title">Untukmu, malam ini</h2>
+    <p class="section-label">03 — a letter</p>
+    <h2 class="section-title">For you, tonight</h2>
     <div class="letter-card scroll-reveal">
       <div class="wax-seal">✉</div>
       <p class="letter-text" id="letterText"></p>
@@ -81,25 +81,25 @@
 
   <!-- ============ TIMELINE ============ -->
   <section class="timeline-section reveal-on-gift" id="timelineSection">
-    <p class="section-label">04 — perjalanan kita</p>
-    <h2 class="section-title">Cerita yang Kita Tulis</h2>
+    <p class="section-label">04 — our journey</p>
+    <h2 class="section-title">The Story We Wrote</h2>
     <div class="timeline-track" id="timelineTrack"></div>
   </section>
 
   <!-- ============ GALLERY ============ -->
   <section class="gallery-section reveal-on-gift" id="gallerySection">
-    <p class="section-label">05 — jejak kenangan</p>
-    <h2 class="section-title scroll-reveal">Potret-potret Kecil</h2>
-    <p class="section-sub">geser buat lihat kenangan selanjutnya</p>
+    <p class="section-label">05 — little memories</p>
+    <h2 class="section-title scroll-reveal">Little Snapshots</h2>
+    <p class="section-sub">swipe to see the next memory</p>
     <div class="photo-stack scroll-reveal" id="photoStack"></div>
     <p class="stack-counter" id="stackCounter"></p>
   </section>
 
   <!-- ============ MINI GAMES ============ -->
   <section class="games-section reveal-on-gift" id="gamesSection">
-    <p class="section-label">06 — main dulu yuk</p>
-    <h2 class="section-title scroll-reveal">Tiga Permainan Kecil</h2>
-    <p class="section-sub">isengan sebelum ke penutup</p>
+    <p class="section-label">06 — let's play</p>
+    <h2 class="section-title scroll-reveal">Three Little Games</h2>
+    <p class="section-sub">a bit of fun before the closing</p>
     <div class="game-cards" id="gameCards"></div>
 
     <div class="game-modal" id="gameModal">
@@ -113,15 +113,16 @@
   <!-- ============ CLOSING ============ -->
   <section class="closing-section reveal-on-gift" id="closingSection">
     <div class="closing-glow"></div>
-    <p class="section-label">07 — penutup</p>
-    <h2 class="closing-title scroll-reveal">Selamat ulang tahun, <span id="closingName"></span> 🕯️</h2>
+    <p class="section-label">07 — closing</p>
+    <img class="closing-photo scroll-reveal" src="cupcake.webp" alt="happy birthday" loading="lazy" />
+    <h2 class="closing-title scroll-reveal">Happy birthday, <span id="closingName"></span> 🕯️</h2>
     <p class="closing-text scroll-reveal" id="closingText"></p>
-    <footer class="site-footer">Dibuat dengan niat baik · site by Berr</footer>
+    <footer class="site-footer">Made with good intentions · site by Berr</footer>
   </section>
 
   <!-- ============ MUSIC PLAYER (persistent) ============ -->
   <div class="music-player" id="musicPlayer">
-    <button class="music-toggle" id="musicToggle" aria-label="Putar musik">
+    <button class="music-toggle" id="musicToggle" aria-label="Play music">
       <span class="bar"></span><span class="bar"></span><span class="bar"></span>
     </button>
     <span class="music-title" id="musicTitle"></span>
