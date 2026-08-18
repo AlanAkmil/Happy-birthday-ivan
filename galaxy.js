@@ -469,16 +469,17 @@
   // dari sudut manapun kamera diputer — cocok buat kontrol 360°.
   function makeNebulaSprite(colorA, colorB, size, opacity) {
     const c = document.createElement("canvas");
-    c.width = 256;
-    c.height = 256;
+    c.width = 512;
+    c.height = 512;
     const ctx = c.getContext("2d");
-    const grad = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+    const grad = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
     grad.addColorStop(0, colorA);
     grad.addColorStop(0.45, colorB);
     grad.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 256, 256);
+    ctx.fillRect(0, 0, 512, 512);
     const tex = new THREE.CanvasTexture(c);
+    tex.needsUpdate = true;
     const mat = new THREE.SpriteMaterial({
       map: tex,
       transparent: true,
@@ -492,10 +493,11 @@
   }
 
   const nebulaConfigs = [
-    { colorA: "rgba(90,210,220,0.5)", colorB: "rgba(20,90,110,0.24)", size: 140, opacity: 0.35, pos: [-160, 40, -220] },
-    { colorA: "rgba(140,90,255,0.5)", colorB: "rgba(60,20,110,0.22)", size: 170, opacity: 0.32, pos: [190, -30, -260] },
-    { colorA: "rgba(90,180,255,0.4)", colorB: "rgba(30,60,130,0.2)", size: 130, opacity: 0.28, pos: [-40, -120, -300] },
-    { colorA: "rgba(255,180,120,0.4)", colorB: "rgba(140,60,20,0.18)", size: 110, opacity: 0.25, pos: [120, 110, -240] },
+    { colorA: "rgba(90,210,220,0.55)", colorB: "rgba(20,90,110,0.26)", size: 220, opacity: 0.4, pos: [-140, 40, -170] },
+    { colorA: "rgba(140,90,255,0.55)", colorB: "rgba(60,20,110,0.24)", size: 260, opacity: 0.38, pos: [170, -30, -210] },
+    { colorA: "rgba(90,180,255,0.45)", colorB: "rgba(30,60,130,0.22)", size: 210, opacity: 0.32, pos: [-40, -110, -240] },
+    { colorA: "rgba(255,180,120,0.45)", colorB: "rgba(140,60,20,0.2)", size: 190, opacity: 0.3, pos: [110, 100, -190] },
+    { colorA: "rgba(255,255,255,0.3)", colorB: "rgba(140,180,255,0.18)", size: 180, opacity: 0.22, pos: [-200, -60, -260] },
   ];
   const nebulaSprites = nebulaConfigs.map((cfg) => {
     const sprite = makeNebulaSprite(cfg.colorA, cfg.colorB, cfg.size, cfg.opacity);
@@ -505,10 +507,10 @@
   });
 
   // ---------- galaksi lain dari kejauhan (dekorasi background) ----------
-  // smudge kecil berbentuk elips dengan hint lengan spiral samar,
-  // ditaruh jauh banget di belakang starfield biar berasa "galaksi tetangga".
+  // resolusi lebih tinggi + lengan spiral lebih detail biar keliatan HD,
+  // gak ngeblur pas di-zoom kamera.
   function makeGalaxySprite(coreColor, haloColor) {
-    const size = 160;
+    const size = 512;
     const c = document.createElement("canvas");
     c.width = size;
     c.height = size;
@@ -517,21 +519,36 @@
     const cy = size / 2;
     const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 2);
     grad.addColorStop(0, "rgba(255,255,255,0.95)");
-    grad.addColorStop(0.12, coreColor);
-    grad.addColorStop(0.4, haloColor);
+    grad.addColorStop(0.1, coreColor);
+    grad.addColorStop(0.38, haloColor);
     grad.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, size, size);
-    // hint lengan spiral: beberapa garis elips tipis yang samar
+    // lengan spiral: beberapa garis elips + speckle partikel biar detail
     ctx.globalCompositeOperation = "lighter";
     ctx.strokeStyle = haloColor;
-    ctx.lineWidth = 2.5;
-    for (let i = 0; i < 3; i++) {
+    ctx.lineWidth = size * 0.014;
+    for (let i = 0; i < 4; i++) {
       ctx.beginPath();
-      ctx.ellipse(cx, cy, size * 0.42 - i * 14, size * 0.1 - i * 2, Math.PI / 4.5, 0.3, Math.PI * 1.7);
+      ctx.ellipse(cx, cy, size * 0.42 - i * size * 0.045, size * 0.11 - i * size * 0.008, Math.PI / 4.5, 0.3, Math.PI * 1.7);
       ctx.stroke();
     }
+    // speckle bintang halus di sekitar inti biar berasa bertekstur/HD
+    ctx.fillStyle = "rgba(255,255,255,0.9)";
+    for (let i = 0; i < 90; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const rad = Math.pow(Math.random(), 0.6) * size * 0.4;
+      const px = cx + Math.cos(ang) * rad;
+      const py = cy + Math.sin(ang) * rad * 0.42;
+      const s = Math.random() * 1.6 + 0.4;
+      ctx.globalAlpha = 0.25 + Math.random() * 0.5;
+      ctx.beginPath();
+      ctx.arc(px, py, s, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
     const tex = new THREE.CanvasTexture(c);
+    tex.needsUpdate = true;
     const mat = new THREE.SpriteMaterial({
       map: tex,
       transparent: true,
@@ -543,19 +560,21 @@
   }
 
   const GALAXY_PALETTE = [
-    { core: "rgba(210,225,255,0.85)", halo: "rgba(120,160,255,0.4)" }, // biru spiral
-    { core: "rgba(255,235,200,0.85)", halo: "rgba(255,190,120,0.4)" }, // emas elips (kayak Andromeda)
-    { core: "rgba(220,255,250,0.8)", halo: "rgba(120,220,210,0.35)" }, // teal
-    { core: "rgba(230,215,255,0.8)", halo: "rgba(160,120,255,0.35)" }, // ungu lembut
+    { core: "rgba(210,225,255,0.9)", halo: "rgba(120,160,255,0.45)" }, // biru spiral
+    { core: "rgba(255,235,200,0.9)", halo: "rgba(255,190,120,0.45)" }, // emas elips (kayak Andromeda)
+    { core: "rgba(220,255,250,0.85)", halo: "rgba(120,220,210,0.4)" }, // teal
+    { core: "rgba(230,215,255,0.85)", halo: "rgba(160,120,255,0.4)" }, // ungu lembut
   ];
 
-  const DISTANT_GALAXY_COUNT = 11;
+  const DISTANT_GALAXY_COUNT = 13;
   const distantGalaxies = [];
   for (let i = 0; i < DISTANT_GALAXY_COUNT; i++) {
     const palette = GALAXY_PALETTE[i % GALAXY_PALETTE.length];
     const sprite = makeGalaxySprite(palette.core, palette.halo);
-    // sebar di kulit bola jauh (radius gede) biar keliatan dari sudut manapun
-    const r = 260 + Math.random() * 220;
+    // 3 galaksi "hero" ditaruh lebih deket & lebih gede biar seukuran
+    // sama galaksi utama (sisanya tetep jauh sebagai latar)
+    const isHero = i < 3;
+    const r = isHero ? 95 + Math.random() * 55 : 140 + Math.random() * 160;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     sprite.position.set(
@@ -563,10 +582,10 @@
       r * Math.sin(phi) * Math.sin(theta) * 0.6 + TARGET_Y,
       r * Math.cos(phi)
     );
-    const size = 10 + Math.random() * 22;
+    const size = isHero ? 55 + Math.random() * 35 : 24 + Math.random() * 30;
     sprite.scale.set(size, size * (0.45 + Math.random() * 0.4), 1);
     sprite.material.rotation = Math.random() * Math.PI * 2;
-    const targetOpacity = 0.35 + Math.random() * 0.35;
+    const targetOpacity = isHero ? 0.75 + Math.random() * 0.2 : 0.55 + Math.random() * 0.3;
     scene.add(sprite);
     distantGalaxies.push({ sprite, targetOpacity, driftSpeed: (Math.random() - 0.5) * 0.01 });
   }
@@ -575,7 +594,7 @@
   // titik terang dengan "diffraction spike" (garis silang tipis) yang
   // kedap-kedip berirama, kayak referensi foto Webb Telescope.
   function makePulsarSprite(color) {
-    const size = 128;
+    const size = 256;
     const c = document.createElement("canvas");
     c.width = size;
     c.height = size;
@@ -584,33 +603,42 @@
     const cy = size / 2;
     ctx.globalCompositeOperation = "lighter";
 
-    function spike(x1, y1, x2, y2) {
+    function spike(x1, y1, x2, y2, width) {
       const grad = ctx.createLinearGradient(x1, y1, x2, y2);
       grad.addColorStop(0, "rgba(255,255,255,0)");
       grad.addColorStop(0.5, color);
       grad.addColorStop(1, "rgba(255,255,255,0)");
       ctx.strokeStyle = grad;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = width;
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
       ctx.stroke();
     }
-    spike(cx - size / 2, cy, cx + size / 2, cy);
-    spike(cx, cy - size / 2, cx, cy + size / 2);
-    ctx.lineWidth = 1.2;
-    spike(cx - size / 3, cy - size / 3, cx + size / 3, cy + size / 3);
-    spike(cx - size / 3, cy + size / 3, cx + size / 3, cy - size / 3);
+    spike(cx - size / 2, cy, cx + size / 2, cy, 4);
+    spike(cx, cy - size / 2, cx, cy + size / 2, 4);
+    spike(cx - size / 3, cy - size / 3, cx + size / 3, cy + size / 3, 2.2);
+    spike(cx - size / 3, cy + size / 3, cx + size / 3, cy - size / 3, 2.2);
 
-    const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 8);
+    // halo lembut di sekitar inti biar keliatan jelas walau kecil di layar
+    const haloGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 3.2);
+    haloGrad.addColorStop(0, color);
+    haloGrad.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = haloGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, size / 3.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 7);
     coreGrad.addColorStop(0, "rgba(255,255,255,1)");
     coreGrad.addColorStop(1, "rgba(255,255,255,0)");
     ctx.fillStyle = coreGrad;
     ctx.beginPath();
-    ctx.arc(cx, cy, size / 8, 0, Math.PI * 2);
+    ctx.arc(cx, cy, size / 7, 0, Math.PI * 2);
     ctx.fill();
 
     const tex = new THREE.CanvasTexture(c);
+    tex.needsUpdate = true;
     const mat = new THREE.SpriteMaterial({
       map: tex,
       transparent: true,
@@ -622,11 +650,11 @@
   }
 
   const PULSAR_COLORS = ["#bfe0ff", "#fff3d6", "#c9fff0"];
-  const PULSAR_COUNT = 4;
+  const PULSAR_COUNT = 5;
   const pulsars = [];
   for (let i = 0; i < PULSAR_COUNT; i++) {
     const sprite = makePulsarSprite(PULSAR_COLORS[i % PULSAR_COLORS.length]);
-    const r = 90 + Math.random() * 260;
+    const r = 55 + Math.random() * 180;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     sprite.position.set(
@@ -634,7 +662,7 @@
       r * Math.sin(phi) * Math.sin(theta) * 0.6 + TARGET_Y,
       r * Math.cos(phi)
     );
-    const baseSize = 3 + Math.random() * 4;
+    const baseSize = 9 + Math.random() * 10;
     sprite.scale.set(baseSize, baseSize, 1);
     scene.add(sprite);
     pulsars.push({
