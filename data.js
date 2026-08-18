@@ -70,12 +70,22 @@ Once again, happy birthday, Van. Hope you have an awesome day!`,
     {
       q: "What do we usually do when we're bored?",
       options: ["Talk nonsense", "Play games together", "Argue about random stuff", "All of the above"],
-      correct: 3,
+      correct: "all",
     },
     {
       q: "What kind of friend do you think I am?",
       options: ["A bit weird", "Reliable", "Loves joking around", "All of the above"],
-      correct: 3,
+      correct: "all",
+    },
+    {
+      q: "Do you still remember why we started chatting?",
+      options: [
+        "A random group chat mix-up",
+        "You commented on my post first",
+        "Because I found your message saying you wanted an online furry friend, and you messaged me first",
+        "We got matched by a mutual friend",
+      ],
+      correct: 2,
     },
   ],
 
