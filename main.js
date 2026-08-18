@@ -12,7 +12,7 @@
   document.getElementById("closingName").textContent = SITE_DATA.name;
   document.getElementById("closingText").textContent = SITE_DATA.closingMessage;
   document.getElementById("musicTitle").textContent = SITE_DATA.musicTitle;
-  document.getElementById("lockHint").textContent = SITE_DATA.secretHint || "masukkan kode rahasia kalian";
+  document.getElementById("lockHint").textContent = SITE_DATA.secretHint || "enter the secret code";
 
   // ---------- floating lanterns background ----------
   const field = document.getElementById("lanternField");
@@ -310,7 +310,7 @@
         // ============================================================
         const startOnFirstInteraction = () => {
           audio.play().catch(() => {
-            showToast("Taruh file lagu di song.mp3 dulu ya, biar musiknya bisa muter.");
+            showToast("Add a song file at song.mp3 first so the music can play.");
           });
         };
         ["click", "touchstart", "keydown", "scroll"].forEach((evt) =>
@@ -325,7 +325,7 @@
       audio
         .play()
         .catch(() => {
-          showToast("Taruh file lagu di song.mp3 dulu ya, biar musiknya bisa muter.");
+          showToast("Add a song file at song.mp3 first so the music can play.");
         });
     } else {
       audio.pause();
