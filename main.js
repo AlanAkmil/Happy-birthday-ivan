@@ -273,64 +273,51 @@
     .querySelectorAll(".scroll-reveal, .timeline-item")
     .forEach((el) => revealObserver.observe(el));
 
-  // ---------- music player ----------
-  const audio = document.getElementById("audioEl");
-  audio.src = SITE_DATA.musicSrc;
+  // ---------- music player (YouTube, autoplay) ----------
+  const YT_VIDEO_ID = "VT1-sitWRtY"; // https://youtu.be/VT1-sitWRtY
   const player = document.getElementById("musicPlayer");
   const toggle = document.getElementById("musicToggle");
-  const toast = document.getElementById("toast");
+  let ytPlayer = null;
   let playing = false;
 
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 3200);
-  }
+  window.onYouTubeIframeAPIReady = function () {
+    ytPlayer = new YT.Player("ytMusic", {
+      videoId: YT_VIDEO_ID,
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        disablekb: 1,
+        loop: 1,
+        playlist: YT_VIDEO_ID, // wajib biar loop jalan
+        fs: 0,
+        modestbranding: 1,
+        playsinline: 1,
+      },
+      events: {
+        onReady: (e) => {
+          e.target.setVolume(70);
+          e.target.playVideo();
 
-  // keep UI (icon/animasi bar) selalu sinkron sama status audio beneran,
-  // gak peduli dia mulai muter dari autoplay, klik tombol, atau fallback.
-  audio.addEventListener("play", () => {
-    playing = true;
-    player.classList.add("playing");
-  });
-  audio.addEventListener("pause", () => {
-    playing = false;
-    player.classList.remove("playing");
-  });
-
-  function tryAutoplay() {
-    audio
-      .play()
-      .catch(() => {
-        // ============================================================
-        // Browser blokir autoplay yang ada suaranya kalau belum ada
-        // interaksi user di HALAMAN INI (navigasi dari page1 ke page2
-        // dianggap "fresh", gesture klik MULAI/PENCET gak kebawa).
-        // Jadi musiknya dipasang nyala otomatis begitu user pertama
-        // kali sentuh/scroll/klik apapun di halaman ini — biasanya
-        // kejadian dalam sepersekian detik pas mereka mulai baca.
-        // ============================================================
-        const startOnFirstInteraction = () => {
-          audio.play().catch(() => {
-            showToast("Add a song file at song.mp3 first so the music can play.");
-          });
-        };
-        ["click", "touchstart", "keydown", "scroll"].forEach((evt) =>
-          window.addEventListener(evt, startOnFirstInteraction, { once: true, passive: true })
-        );
-      });
-  }
-  tryAutoplay();
+          // Kalau browser blokir autoplay bersuara (belum ada gesture di
+          // halaman ini), nyalakan otomatis di interaksi pertama user.
+          ["click", "touchstart", "keydown", "scroll"].forEach((evt) =>
+            window.addEventListener(evt, () => e.target.playVideo(), { once: true, passive: true })
+          );
+        },
+        onStateChange: (e) => {
+          playing = e.data === YT.PlayerState.PLAYING;
+          player.classList.toggle("playing", playing);
+        },
+      },
+    });
+  };
 
   toggle.addEventListener("click", () => {
-    if (!playing) {
-      audio
-        .play()
-        .catch(() => {
-          showToast("Add a song file at song.mp3 first so the music can play.");
-        });
+    if (!ytPlayer) return;
+    if (playing) {
+      ytPlayer.pauseVideo();
     } else {
-      audio.pause();
+      ytPlayer.playVideo();
     }
   });
 })();
