@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="pageTitle">Happy Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+  <div class="lantern-field" id="lanternField"></div>
+
+  <!-- ============ LOCK SCREEN ============ -->
+  <div class="lock-overlay" id="lockOverlay">
+    <div class="lock-card">
+      <span class="lock-flower">✦</span>
+      <h2 class="lock-title">Buat Lo, Sahabat Gua</h2>
+      <p class="lock-sub" id="lockHint">masukkan kode rahasianya</p>
+      <div class="lock-dots" id="lockDots"></div>
+      <div class="lock-pad" id="lockPad"></div>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <p class="hero-eyebrow">malam ini, langit menyalakan satu lentera lagi buat sahabat gua</p>
+    <h1 class="hero-title" id="heroTitle">Happy Birthday</h1>
+    <p class="hero-date" id="heroDate"></p>
+    <button class="scroll-cue" id="scrollCue">
+      <span>buka kadonya</span>
+      <span class="cue-arrow">↓</span>
+    </button>
+  </section>
+
+  <!-- ============ GIFT ============ -->
+  <section class="gift-section" id="giftSection">
+    <p class="section-label">01 — sebuah kado</p>
+    <h2 class="section-title">Ada sesuatu untukmu</h2>
+    <p class="section-sub">Tarik pita-nya pelan-pelan.</p>
+
+    <div class="gift-stage">
+      <div class="gift-glow"></div>
+      <button class="gift-box" id="giftBox" aria-label="Buka kado">
+        <div class="box-lid">
+          <div class="bow">
+            <span class="bow-loop left"></span>
+            <span class="bow-loop right"></span>
+            <span class="bow-knot"></span>
+          </div>
+        </div>
+        <div class="ribbon-v"></div>
+        <div class="box-base">
+          <div class="ribbon-v static"></div>
+        </div>
+      </button>
+    </div>
+    <p class="gift-hint" id="giftHint">ketuk kadonya</p>
+  </section>
+
+  <!-- ============ BOUQUET ============ -->
+  <section class="bouquet-section reveal-on-gift" id="bouquetSection">
+    <p class="section-label">02 — buket digital</p>
+    <h2 class="section-title scroll-reveal">Petik satu bunga</h2>
+    <p class="section-sub">tiap kelopak nyimpen satu potong rasa</p>
+    <div class="bouquet-field scroll-reveal" id="bouquetField"></div>
+    <div class="bouquet-note" id="bouquetNote">tap salah satu bunga di atas ✿</div>
+  </section>
+
+  <!-- ============ LETTER ============ -->
+  <section class="letter-section reveal-on-gift" id="letterSection">
+    <p class="section-label">03 — sepucuk surat</p>
+    <h2 class="section-title">Untukmu, malam ini</h2>
+    <div class="letter-card scroll-reveal">
+      <div class="wax-seal">✉</div>
+      <p class="letter-text" id="letterText"></p>
+      <span class="letter-cursor" id="letterCursor">|</span>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="timeline-section reveal-on-gift" id="timelineSection">
+    <p class="section-label">04 — perjalanan kita</p>
+    <h2 class="section-title">Cerita yang Kita Tulis</h2>
+    <div class="timeline-track" id="timelineTrack"></div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery-section reveal-on-gift" id="gallerySection">
+    <p class="section-label">05 — jejak kenangan</p>
+    <h2 class="section-title scroll-reveal">Potret-potret Kecil</h2>
+    <p class="section-sub">geser buat lihat kenangan selanjutnya</p>
+    <div class="photo-stack scroll-reveal" id="photoStack"></div>
+    <p class="stack-counter" id="stackCounter"></p>
+  </section>
+
+  <!-- ============ MINI GAMES ============ -->
+  <section class="games-section reveal-on-gift" id="gamesSection">
+    <p class="section-label">06 — main dulu yuk</p>
+    <h2 class="section-title scroll-reveal">Tiga Permainan Kecil</h2>
+    <p class="section-sub">isengan sebelum ke penutup</p>
+    <div class="game-cards" id="gameCards"></div>
+
+    <div class="game-modal" id="gameModal">
+      <div class="game-modal-box">
+        <button class="game-close" id="gameClose">✕</button>
+        <div id="gameStage"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section class="closing-section reveal-on-gift" id="closingSection">
+    <div class="closing-glow"></div>
+    <p class="section-label">07 — penutup</p>
+    <h2 class="closing-title scroll-reveal">Selamat ulang tahun, <span id="closingName"></span> 🕯️</h2>
+    <p class="closing-text scroll-reveal" id="closingText"></p>
+    <footer class="site-footer">Dibuat dengan niat baik · site by Berr</footer>
+  </section>
+
+  <!-- ============ MUSIC PLAYER (persistent) ============ -->
+  <div class="music-player" id="musicPlayer">
+    <button class="music-toggle" id="musicToggle" aria-label="Putar musik">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <span class="music-title" id="musicTitle"></span>
+    <audio id="audioEl" loop preload="auto"></audio>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script src="photos.js"></script>
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+  <script src="games.js"></script>
+</body>
+</html>
