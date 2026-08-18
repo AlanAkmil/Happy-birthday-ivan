@@ -27,7 +27,7 @@ const SITE_DATA = {
 
   // Digital bouquet — each flower reveals one piece of the message
   bouquet: [
-    "Happy birthday, Van 🥳",
+    "Happy birthday, Ivan 🥳",
     "Thanks for being such a fun friend to talk to, from TikTok all the way to now",
     "We've been friends for 3 years, and you're one of the best friends I've got",
     "Hope you keep crushing it and we keep having awesome moments together",
@@ -43,17 +43,19 @@ I'm not exactly great with words, but I'm genuinely grateful to have met you and
 
 I hope this new year of your life brings you more success, good health, and everything you're planning actually works out. I also hope we keep being friends and keep talking as much as we always have.
 
-Once again, happy birthday, Van. Hope you have an awesome day!`,
+All I could really give you is this virtual gift. I spent about 5 hours building it just for you. I did my absolute best putting this little web gift together, and I hope you like it — please don't expect too much from it. Honestly, I'm just grateful that in my life I have a friend from another country named Ivan. You know, I have a lot of friends, but I only really consider two of them my true best friends — you, Ivan, and one real-life friend of mine. Anyway, whenever something's going on with you, tell me about it. I'll always try to just listen, without judging and without giving you empty pep talks. 🥰🥳🥳
+
+Once again, happy birthday, Ivan. Hope you have an awesome day! 🎊🎉🎉`,
 
   // Our journey — the friendship timeline
   timeline: [
     { label: "The Beginning", title: "First Met on TikTok", desc: "Didn't expect a random comment to turn into a friendship that's lasted this long." },
     { label: "First Chat", title: "Our First Conversation", desc: "Started as small talk, turned into never really stopping." },
     { label: "3 Years In", title: "Still Talking All the Time", desc: "Different cities, maybe never even met in person, but still close." },
-    { label: "Still Going", title: "Now, and Onward", desc: "Hope our friendship keeps going strong, Van." },
+    { label: "Still Going", title: "Now, and Onward", desc: "Hope our friendship keeps going strong, Ivan." },
   ],
 
-  closingMessage: "Thanks for being such a great friend to talk to all this time, Van. Hope our friendship lasts. Happy birthday!",
+  closingMessage: "Thanks for being such a great friend to talk to all this time, Ivan. Hope our friendship lasts. Happy birthday!",
 
   // Fun little quiz
   quiz: [
