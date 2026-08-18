@@ -67,10 +67,10 @@
           const chosen = Number(btn.dataset.i);
           stage.querySelectorAll(".quiz-option").forEach((b, i) => {
             b.disabled = true;
-            if (i === item.correct) b.classList.add("correct");
+            if (item.correct === "all" || i === item.correct) b.classList.add("correct");
             else if (i === chosen) b.classList.add("wrong");
           });
-          if (chosen === item.correct) score++;
+          if (item.correct === "all" || chosen === item.correct) score++;
           setTimeout(() => {
             index++;
             if (index < questions.length) showQuestion();
