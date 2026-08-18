@@ -84,7 +84,7 @@
       stage.innerHTML = `
         <h3 class="game-title">Done!</h3>
         <p class="quiz-result">${score} out of ${questions.length} correct 🥳</p>
-        <p class="game-sub">thanks for playing, Van</p>
+        <p class="game-sub">thanks for playing, Ivan</p>
         <button class="game-btn" id="quizReplay">Play Again</button>
       `;
       document.getElementById("quizReplay").addEventListener("click", () => {
