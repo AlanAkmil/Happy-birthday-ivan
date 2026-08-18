@@ -492,7 +492,7 @@
   }
 
   const nebulaConfigs = [
-    { colorA: "rgba(255,90,140,0.55)", colorB: "rgba(120,20,70,0.25)", size: 140, opacity: 0.35, pos: [-160, 40, -220] },
+    { colorA: "rgba(90,210,220,0.5)", colorB: "rgba(20,90,110,0.24)", size: 140, opacity: 0.35, pos: [-160, 40, -220] },
     { colorA: "rgba(140,90,255,0.5)", colorB: "rgba(60,20,110,0.22)", size: 170, opacity: 0.32, pos: [190, -30, -260] },
     { colorA: "rgba(90,180,255,0.4)", colorB: "rgba(30,60,130,0.2)", size: 130, opacity: 0.28, pos: [-40, -120, -300] },
     { colorA: "rgba(255,180,120,0.4)", colorB: "rgba(140,60,20,0.18)", size: 110, opacity: 0.25, pos: [120, 110, -240] },
@@ -504,9 +504,152 @@
     return sprite;
   });
 
+  // ---------- galaksi lain dari kejauhan (dekorasi background) ----------
+  // smudge kecil berbentuk elips dengan hint lengan spiral samar,
+  // ditaruh jauh banget di belakang starfield biar berasa "galaksi tetangga".
+  function makeGalaxySprite(coreColor, haloColor) {
+    const size = 160;
+    const c = document.createElement("canvas");
+    c.width = size;
+    c.height = size;
+    const ctx = c.getContext("2d");
+    const cx = size / 2;
+    const cy = size / 2;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 2);
+    grad.addColorStop(0, "rgba(255,255,255,0.95)");
+    grad.addColorStop(0.12, coreColor);
+    grad.addColorStop(0.4, haloColor);
+    grad.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+    // hint lengan spiral: beberapa garis elips tipis yang samar
+    ctx.globalCompositeOperation = "lighter";
+    ctx.strokeStyle = haloColor;
+    ctx.lineWidth = 2.5;
+    for (let i = 0; i < 3; i++) {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, size * 0.42 - i * 14, size * 0.1 - i * 2, Math.PI / 4.5, 0.3, Math.PI * 1.7);
+      ctx.stroke();
+    }
+    const tex = new THREE.CanvasTexture(c);
+    const mat = new THREE.SpriteMaterial({
+      map: tex,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    return new THREE.Sprite(mat);
+  }
+
+  const GALAXY_PALETTE = [
+    { core: "rgba(210,225,255,0.85)", halo: "rgba(120,160,255,0.4)" }, // biru spiral
+    { core: "rgba(255,235,200,0.85)", halo: "rgba(255,190,120,0.4)" }, // emas elips (kayak Andromeda)
+    { core: "rgba(220,255,250,0.8)", halo: "rgba(120,220,210,0.35)" }, // teal
+    { core: "rgba(230,215,255,0.8)", halo: "rgba(160,120,255,0.35)" }, // ungu lembut
+  ];
+
+  const DISTANT_GALAXY_COUNT = 11;
+  const distantGalaxies = [];
+  for (let i = 0; i < DISTANT_GALAXY_COUNT; i++) {
+    const palette = GALAXY_PALETTE[i % GALAXY_PALETTE.length];
+    const sprite = makeGalaxySprite(palette.core, palette.halo);
+    // sebar di kulit bola jauh (radius gede) biar keliatan dari sudut manapun
+    const r = 260 + Math.random() * 220;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    sprite.position.set(
+      r * Math.sin(phi) * Math.cos(theta),
+      r * Math.sin(phi) * Math.sin(theta) * 0.6 + TARGET_Y,
+      r * Math.cos(phi)
+    );
+    const size = 10 + Math.random() * 22;
+    sprite.scale.set(size, size * (0.45 + Math.random() * 0.4), 1);
+    sprite.material.rotation = Math.random() * Math.PI * 2;
+    const targetOpacity = 0.35 + Math.random() * 0.35;
+    scene.add(sprite);
+    distantGalaxies.push({ sprite, targetOpacity, driftSpeed: (Math.random() - 0.5) * 0.01 });
+  }
+
+  // ---------- pulsar berkedip di kejauhan ----------
+  // titik terang dengan "diffraction spike" (garis silang tipis) yang
+  // kedap-kedip berirama, kayak referensi foto Webb Telescope.
+  function makePulsarSprite(color) {
+    const size = 128;
+    const c = document.createElement("canvas");
+    c.width = size;
+    c.height = size;
+    const ctx = c.getContext("2d");
+    const cx = size / 2;
+    const cy = size / 2;
+    ctx.globalCompositeOperation = "lighter";
+
+    function spike(x1, y1, x2, y2) {
+      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+      grad.addColorStop(0, "rgba(255,255,255,0)");
+      grad.addColorStop(0.5, color);
+      grad.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+    spike(cx - size / 2, cy, cx + size / 2, cy);
+    spike(cx, cy - size / 2, cx, cy + size / 2);
+    ctx.lineWidth = 1.2;
+    spike(cx - size / 3, cy - size / 3, cx + size / 3, cy + size / 3);
+    spike(cx - size / 3, cy + size / 3, cx + size / 3, cy - size / 3);
+
+    const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, size / 8);
+    coreGrad.addColorStop(0, "rgba(255,255,255,1)");
+    coreGrad.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = coreGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, size / 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    const tex = new THREE.CanvasTexture(c);
+    const mat = new THREE.SpriteMaterial({
+      map: tex,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    return new THREE.Sprite(mat);
+  }
+
+  const PULSAR_COLORS = ["#bfe0ff", "#fff3d6", "#c9fff0"];
+  const PULSAR_COUNT = 4;
+  const pulsars = [];
+  for (let i = 0; i < PULSAR_COUNT; i++) {
+    const sprite = makePulsarSprite(PULSAR_COLORS[i % PULSAR_COLORS.length]);
+    const r = 90 + Math.random() * 260;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    sprite.position.set(
+      r * Math.sin(phi) * Math.cos(theta),
+      r * Math.sin(phi) * Math.sin(theta) * 0.6 + TARGET_Y,
+      r * Math.cos(phi)
+    );
+    const baseSize = 3 + Math.random() * 4;
+    sprite.scale.set(baseSize, baseSize, 1);
+    scene.add(sprite);
+    pulsars.push({
+      sprite,
+      baseSize,
+      speed: 1.2 + Math.random() * 2,
+      phase: Math.random() * Math.PI * 2,
+      targetOpacity: 0.7 + Math.random() * 0.3,
+    });
+  }
+
   // ---------- animation loop ----------
   const clock = new THREE.Clock();
   let introDone = false;
+  let introRevealOpacity = 0; // dipakai galaksi jauh & pulsar biar fade in bareng heart/vortex
 
   function animate() {
     requestAnimationFrame(animate);
@@ -524,6 +667,21 @@
     starPoints.rotation.y = t * 0.01;
     nebulaSprites.forEach((s, i) => {
       s.material.opacity = nebulaConfigs[i].opacity * (0.85 + Math.sin(t * 0.08 + i * 2) * 0.15);
+    });
+
+    // galaksi jauh: drift super pelan + kerlip halus
+    distantGalaxies.forEach((g, i) => {
+      g.sprite.material.rotation += g.driftSpeed * 0.02;
+      const flicker = 0.9 + Math.sin(t * 0.15 + i * 3) * 0.1;
+      g.sprite.material.opacity = introRevealOpacity * g.targetOpacity * flicker;
+    });
+
+    // pulsar: kedip tajam berirama (bukan sinus lembut, tapi denyut pendek)
+    pulsars.forEach((p) => {
+      const pulse = Math.pow(Math.max(0, Math.sin(t * p.speed + p.phase)), 9);
+      const scale = p.baseSize * (0.75 + pulse * 0.8);
+      p.sprite.scale.set(scale, scale, 1);
+      p.sprite.material.opacity = introRevealOpacity * p.targetOpacity * (0.12 + pulse * 0.88);
     });
 
     if (introDone) {
@@ -565,6 +723,7 @@
       vortexMat.opacity = revealEased * 0.9;
       sparkMat.opacity = revealEased * 0.7;
       orbitLayer.style.opacity = revealEased;
+      introRevealOpacity = revealEased;
 
       if (progress < 1) {
         requestAnimationFrame(step);
