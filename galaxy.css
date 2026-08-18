@@ -220,13 +220,15 @@ html,body{
 .intro-gif{
   display:block;
   width:100%;
-  max-width:230px;
-  height:200px;
-  object-fit:cover;
+  max-width:260px;
+  height:auto;
+  aspect-ratio:1159 / 1358;
+  object-fit:contain;
   border-radius:12px;
   margin:0 auto 16px;
   border:2px solid rgba(255,210,122,0.55);
   box-shadow:0 0 20px rgba(58,160,255,0.4);
+  cursor:pointer;
 }
 .intro-heart{
   display:inline-block;
