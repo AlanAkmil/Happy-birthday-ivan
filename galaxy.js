@@ -790,6 +790,15 @@
     lightbox.addEventListener("click", () => lightbox.classList.remove("visible"));
   }
 
+  // ---------- foto di intro card juga bisa diklik buat liat full ----------
+  const introGif = document.querySelector(".intro-gif");
+  if (introGif) {
+    introGif.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openLightbox(introGif.src);
+    });
+  }
+
   SITE_DATA.orbitPhotos.forEach((src, i) => {
     const el = document.createElement("div");
     el.className = "orbit-photo";
