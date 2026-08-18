@@ -530,7 +530,7 @@
     ctx.lineWidth = size * 0.014;
     for (let i = 0; i < 4; i++) {
       ctx.beginPath();
-      ctx.ellipse(cx, cy, size * 0.42 - i * size * 0.045, size * 0.11 - i * size * 0.008, Math.PI / 4.5, 0.3, Math.PI * 1.7);
+      ctx.ellipse(cx, cy, size * 0.42 - i * size * 0.045, size * 0.11 - i * size * 0.008, Math.PI / 4.5, 0, Math.PI * 2);
       ctx.stroke();
     }
     // speckle bintang halus di sekitar inti biar berasa bertekstur/HD
